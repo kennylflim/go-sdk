@@ -12,19 +12,10 @@ type ItemBlocksRequestBuilder struct {
 }
 // ItemBlocksRequestBuilderGetQueryParameters list the users blocked by an organization.
 type ItemBlocksRequestBuilderGetQueryParameters struct {
-    // Page number of the results to fetch.
+    // The page number of the results to fetch. For more information, see "[Using pagination in the REST API](https://docs.github.com/rest/using-the-rest-api/using-pagination-in-the-rest-api)."
     Page *int32 `uriparametername:"page"`
-    // The number of results per page (max 100).
+    // The number of results per page (max 100). For more information, see "[Using pagination in the REST API](https://docs.github.com/rest/using-the-rest-api/using-pagination-in-the-rest-api)."
     Per_page *int32 `uriparametername:"per_page"`
-}
-// ItemBlocksRequestBuilderGetRequestConfiguration configuration for the request such as headers, query parameters, and middleware options.
-type ItemBlocksRequestBuilderGetRequestConfiguration struct {
-    // Request headers
-    Headers *i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestHeaders
-    // Request options
-    Options []i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestOption
-    // Request query parameters
-    QueryParameters *ItemBlocksRequestBuilderGetQueryParameters
 }
 // ByUsername gets an item from the github.com/octokit/go-sdk/pkg/github/.orgs.item.blocks.item collection
 func (m *ItemBlocksRequestBuilder) ByUsername(username string)(*ItemBlocksWithUsernameItemRequestBuilder) {
@@ -40,7 +31,7 @@ func (m *ItemBlocksRequestBuilder) ByUsername(username string)(*ItemBlocksWithUs
 // NewItemBlocksRequestBuilderInternal instantiates a new BlocksRequestBuilder and sets the default values.
 func NewItemBlocksRequestBuilderInternal(pathParameters map[string]string, requestAdapter i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestAdapter)(*ItemBlocksRequestBuilder) {
     m := &ItemBlocksRequestBuilder{
-        BaseRequestBuilder: *i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.NewBaseRequestBuilder(requestAdapter, "{+baseurl}/orgs/{org}/blocks{?per_page*,page*}", pathParameters),
+        BaseRequestBuilder: *i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.NewBaseRequestBuilder(requestAdapter, "{+baseurl}/orgs/{org}/blocks{?page*,per_page*}", pathParameters),
     }
     return m
 }
@@ -54,7 +45,7 @@ func NewItemBlocksRequestBuilder(rawUrl string, requestAdapter i2ae4187f7daee263
 // [API method documentation]
 // 
 // [API method documentation]: https://docs.github.com/rest/orgs/blocking#list-users-blocked-by-an-organization
-func (m *ItemBlocksRequestBuilder) Get(ctx context.Context, requestConfiguration *ItemBlocksRequestBuilderGetRequestConfiguration)([]i59ea7d99994c6a4bb9ef742ed717844297d055c7fd3742131406eea67a6404b6.SimpleUserable, error) {
+func (m *ItemBlocksRequestBuilder) Get(ctx context.Context, requestConfiguration *i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestConfiguration[ItemBlocksRequestBuilderGetQueryParameters])([]i59ea7d99994c6a4bb9ef742ed717844297d055c7fd3742131406eea67a6404b6.SimpleUserable, error) {
     requestInfo, err := m.ToGetRequestInformation(ctx, requestConfiguration);
     if err != nil {
         return nil, err
@@ -72,15 +63,9 @@ func (m *ItemBlocksRequestBuilder) Get(ctx context.Context, requestConfiguration
     return val, nil
 }
 // ToGetRequestInformation list the users blocked by an organization.
-func (m *ItemBlocksRequestBuilder) ToGetRequestInformation(ctx context.Context, requestConfiguration *ItemBlocksRequestBuilderGetRequestConfiguration)(*i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestInformation, error) {
+func (m *ItemBlocksRequestBuilder) ToGetRequestInformation(ctx context.Context, requestConfiguration *i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestConfiguration[ItemBlocksRequestBuilderGetQueryParameters])(*i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestInformation, error) {
     requestInfo := i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.NewRequestInformationWithMethodAndUrlTemplateAndPathParameters(i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.GET, m.BaseRequestBuilder.UrlTemplate, m.BaseRequestBuilder.PathParameters)
-    if requestConfiguration != nil {
-        if requestConfiguration.QueryParameters != nil {
-            requestInfo.AddQueryParameters(*(requestConfiguration.QueryParameters))
-        }
-        requestInfo.Headers.AddAll(requestConfiguration.Headers)
-        requestInfo.AddRequestOptions(requestConfiguration.Options)
-    }
+    i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.ConfigureRequestInformation(requestInfo, requestConfiguration)
     requestInfo.Headers.TryAdd("Accept", "application/json")
     return requestInfo, nil
 }

@@ -1,13 +1,13 @@
 {
-  "descriptionHash": "8BF7FF7DA89AAF459FE3112D9C74DBE42A0CAC75CF8B7BB5E35495E6641B010F0D8F2C63CDAF197F64E36EE1995C0408B7D76A7FF35B0F04D020D76506285DBC",
+  "descriptionHash": "0FFCEF2E76E5F57B82DD566F419B5A7A79F60B3472F7BA4AA926486D854B4D93B0D20C51E1A06A4B1A6BE5C892F650D553267BDBDB9C79BEFB8CE678EE558815",
   "descriptionLocation": "../../../source-generator/schemas/downloaded.json",
   "lockFileVersion": "1.0.0",
-  "kiotaVersion": "1.10.0-preview.202312210001",
+  "kiotaVersion": "1.11.1",
   "clientClassName": "ApiClient",
   "clientNamespaceName": "github.com/octokit/go-sdk/pkg/github/",
   "language": "Go",
   "usesBackingStore": false,
-  "excludeBackwardCompatible": false,
+  "excludeBackwardCompatible": true,
   "includeAdditionalData": true,
   "serializers": [
     "Microsoft.Kiota.Serialization.Json.JsonSerializationWriterFactory",

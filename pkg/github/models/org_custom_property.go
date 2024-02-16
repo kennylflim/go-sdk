@@ -8,7 +8,7 @@ import (
 type OrgCustomProperty struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // Ordered list of allowed values of the property
+    // An ordered list of the allowed values of the property.The property can have up to 200 allowed values.
     allowed_values []string
     // Default value of the property
     default_value *string
@@ -20,6 +20,8 @@ type OrgCustomProperty struct {
     required *bool
     // The type of the value for the property
     value_type *OrgCustomProperty_value_type
+    // Who can edit the values of the property
+    values_editable_by *OrgCustomProperty_values_editable_by
 }
 // NewOrgCustomProperty instantiates a new orgCustomProperty and sets the default values.
 func NewOrgCustomProperty()(*OrgCustomProperty) {
@@ -36,7 +38,7 @@ func CreateOrgCustomPropertyFromDiscriminatorValue(parseNode i878a80d2330e89d268
 func (m *OrgCustomProperty) GetAdditionalData()(map[string]any) {
     return m.additionalData
 }
-// GetAllowedValues gets the allowed_values property value. Ordered list of allowed values of the property
+// GetAllowedValues gets the allowed_values property value. An ordered list of the allowed values of the property.The property can have up to 200 allowed values.
 func (m *OrgCustomProperty) GetAllowedValues()([]string) {
     return m.allowed_values
 }
@@ -117,6 +119,16 @@ func (m *OrgCustomProperty) GetFieldDeserializers()(map[string]func(i878a80d2330
         }
         return nil
     }
+    res["values_editable_by"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetEnumValue(ParseOrgCustomProperty_values_editable_by)
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetValuesEditableBy(val.(*OrgCustomProperty_values_editable_by))
+        }
+        return nil
+    }
     return res
 }
 // GetPropertyName gets the property_name property value. The name of the property
@@ -126,6 +138,10 @@ func (m *OrgCustomProperty) GetPropertyName()(*string) {
 // GetRequired gets the required property value. Whether the property is required.
 func (m *OrgCustomProperty) GetRequired()(*bool) {
     return m.required
+}
+// GetValuesEditableBy gets the values_editable_by property value. Who can edit the values of the property
+func (m *OrgCustomProperty) GetValuesEditableBy()(*OrgCustomProperty_values_editable_by) {
+    return m.values_editable_by
 }
 // GetValueType gets the value_type property value. The type of the value for the property
 func (m *OrgCustomProperty) GetValueType()(*OrgCustomProperty_value_type) {
@@ -163,6 +179,13 @@ func (m *OrgCustomProperty) Serialize(writer i878a80d2330e89d26896388a3f487eef27
             return err
         }
     }
+    if m.GetValuesEditableBy() != nil {
+        cast := (*m.GetValuesEditableBy()).String()
+        err := writer.WriteStringValue("values_editable_by", &cast)
+        if err != nil {
+            return err
+        }
+    }
     if m.GetValueType() != nil {
         cast := (*m.GetValueType()).String()
         err := writer.WriteStringValue("value_type", &cast)
@@ -182,7 +205,7 @@ func (m *OrgCustomProperty) Serialize(writer i878a80d2330e89d26896388a3f487eef27
 func (m *OrgCustomProperty) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetAllowedValues sets the allowed_values property value. Ordered list of allowed values of the property
+// SetAllowedValues sets the allowed_values property value. An ordered list of the allowed values of the property.The property can have up to 200 allowed values.
 func (m *OrgCustomProperty) SetAllowedValues(value []string)() {
     m.allowed_values = value
 }
@@ -202,6 +225,10 @@ func (m *OrgCustomProperty) SetPropertyName(value *string)() {
 func (m *OrgCustomProperty) SetRequired(value *bool)() {
     m.required = value
 }
+// SetValuesEditableBy sets the values_editable_by property value. Who can edit the values of the property
+func (m *OrgCustomProperty) SetValuesEditableBy(value *OrgCustomProperty_values_editable_by)() {
+    m.values_editable_by = value
+}
 // SetValueType sets the value_type property value. The type of the value for the property
 func (m *OrgCustomProperty) SetValueType(value *OrgCustomProperty_value_type)() {
     m.value_type = value
@@ -215,11 +242,13 @@ type OrgCustomPropertyable interface {
     GetDescription()(*string)
     GetPropertyName()(*string)
     GetRequired()(*bool)
+    GetValuesEditableBy()(*OrgCustomProperty_values_editable_by)
     GetValueType()(*OrgCustomProperty_value_type)
     SetAllowedValues(value []string)()
     SetDefaultValue(value *string)()
     SetDescription(value *string)()
     SetPropertyName(value *string)()
     SetRequired(value *bool)()
+    SetValuesEditableBy(value *OrgCustomProperty_values_editable_by)()
     SetValueType(value *OrgCustomProperty_value_type)()
 }
